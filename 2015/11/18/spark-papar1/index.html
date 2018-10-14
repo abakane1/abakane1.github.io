@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Spark 手册一：初识 | Zuliang Zhao</title><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/5.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Spark 手册一：初识</h1><a id="logo" href="/.">Zuliang Zhao</a><p class="description">Phd Student</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/关于我/"><i class="fa fa-user"> 关于我（科研）</i></a><a href="/ds/"><i class="fa fa-user"> 关于我（技术）</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Spark 手册一：初识</h1><div class="post-meta">Nov 18, 2015<span> | </span><span class="category"><a href="/categories/bigdata/">bigdata</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="post-content"><ul>
+<li>知道Spark这个项目是一年前，在阿里的技术沙龙里面第一次知道了Spark，同时专题还讨论了storm。一年之后，处理了各种杂事，在Hadoop上折腾许久和投奔Python决心让我真正开始尝试使用Spark做一些数据分析的事情。记录点滴，供以后参考。</li>
+</ul>
+<h2 id="入门和基础知识"><a href="#入门和基础知识" class="headerlink" title="入门和基础知识"></a>入门和基础知识</h2><ul>
+<li><p>在下载jdk（227mb）的同时花了大概两个小时阅读相关的基础资料。包括如下</p>
+<ol>
+<li><a href="http://blog.jobbole.com/86232/" target="_blank" rel="noopener">Spark入门（Python版)</a></li>
+<li><a href="http://www.ituring.com.cn/article/200908/" target="_blank" rel="noopener">TURING:Apache Spark 入门攻略</a></li>
+</ol>
+</li>
+<li><p>选的Spark 1.3.0 因为关注的一个开源项目SparkSpatial 是用1.3做的test</p>
+<ol>
+<li><a href="https://github.com/abakane1/SpatialSpark" target="_blank" rel="noopener">项目地址</a></li>
+</ol>
+</li>
+</ul>
+<h2 id="搭建集群"><a href="#搭建集群" class="headerlink" title="搭建集群"></a>搭建集群</h2><ol>
+<li><a href="http://www.open-open.com/lib/view/open1419490748562.html" target="_blank" rel="noopener">hadoop/spark集群搭建</a></li>
+<li><a href="http://blog.csdn.net/Kinger0/article/details/46315101" target="_blank" rel="noopener">spark1.3.1 clusters</a></li>
+</ol>
+<ul>
+<li><p>brew 是装不了idk的。而使用zsh和iterm 敲击jps 命令的话，是可以直接打开下载地址。awesome. </p>
+</li>
+<li><p>无意之间，使用sudo chmod -R 777 /usr命令修改了usr文件的所有者 然后就毁了一个节点，这样的错误肯定有人翻过，所以当然有<a href="http://blog.csdn.net/cqkxboy168/article/details/8672854" target="_blank" rel="noopener">解决方案</a>。</p>
+</li>
+</ul>
+<h2 id="跑集群一定要有scala，"><a href="#跑集群一定要有scala，" class="headerlink" title="跑集群一定要有scala，"></a>跑集群一定要有scala，</h2><ul>
+<li><p>下个新版本就可以了。记一些配置</p>
+<pre><code>export JAVA_HOME=/usr/java
+export JRE_HOME=/usr/java/jre
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export CLASSPATH=.:$JAVA_HOME/lib/jt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export HADOOP_HOME=/usr/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin
+export HBASE_HOME=/usr/hbase
+export PATH=$PATH:$HBASE_HOME/bin
+export HIVE_HOME=/usr/hive
+export PATH=$PATH:$HIVE_HOME/bin
+export OOZIE_HOME=/usr/oozie/oozie-4.0.0-cdh5.2.0
+export OOZIE_CONFIG=$OOZIE_HOME/conf
+export CLASSPATH=$CLASSPATH:$OOZIE_HOME/bin
+export SPARK_HOME=/usr/spark
+export PATH=$SPARK_HOME/bin:$PATH
+export SCALA_HOME=/usr/scala
+export PATH=$PATH:$SCALA_HOME/bin
+</code></pre></li>
+</ul>
+<h2 id="scp-复制集群配置"><a href="#scp-复制集群配置" class="headerlink" title="scp 复制集群配置"></a>scp 复制集群配置</h2><ul>
+<li><p>配置参考这篇<a href="http://blog.csdn.net/Kinger0/article/details/46315101" target="_blank" rel="noopener">文章</a></p>
+<pre><code>sudo scp /etc/profile slave4:/etc/profile
+
+vi spark-env.sh
+
+export SPARK_MASTER_IP=master
+export SPARK_MASTER_PORT=7077
+export SPARK_WORKER_CORES=1
+export SPARK_WORKER_INSTANCES=1
+export SPARK_WORKER_MEMORY=1g
+export JAVA_HOME=/usr/java
+</code></pre></li>
+</ul>
+<h2 id="test-一个小程序"><a href="#test-一个小程序" class="headerlink" title="test 一个小程序"></a>test 一个小程序</h2><pre><code>// 从hdfs读文件
+scala&gt; val file=sc.textFile(&quot;hdfs://172.16.48.202:9000/user/root/input/README.txt&quot;)  
+// 根据空格分词
+scala&gt; val count=file.flatMap(line =&gt; line.split(&quot; &quot;)).map(word =&gt; (word,1)).reduceByKey(_+_)
+//统计输出 
+scala&gt; count.collect()
+</code></pre><h1 id="have-fun"><a href="#have-fun" class="headerlink" title="have fun"></a>have fun</h1></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://doubixie.com/2015/11/18/spark-papar1/" data-id="cjn8vz4pd002wiji6kbbzgcpi" class="article-share-link">Share</a><div class="tags"><a href="/tags/bigdata/">bigdata</a><a href="/tags/Spark/">Spark</a></div><div class="post-nav"><a href="/2016/11/03/summary-about-Spark-HPC/" class="pre">基于Spark的高性能并行及分布式地理空间大数据处理技术和平台综述</a><a href="/2015/10/21/dedecms-ClickPicNext/" class="next">dedecms 点击图片进入下一页</a></div><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins google_ad_client="ca-pub-1923114499719387" enable_page_level_ads="true" class="adsbygoogle"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://doubixie.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GIS/">GIS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Papers/">Papers</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Power-tools/">Power tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program/">Program</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Web/">Web</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/bigdata/">bigdata</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/旅居美国记事/">旅居美国记事</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/硬件/">硬件</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/观后感/">观后感</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/读书笔记/">读书笔记</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/dedecms/" style="font-size: 15px;">dedecms</a> <a href="/tags/ML/" style="font-size: 15px;">ML</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/sublime/" style="font-size: 15px;">sublime</a> <a href="/tags/AMD/" style="font-size: 15px;">AMD</a> <a href="/tags/硬件/" style="font-size: 15px;">硬件</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Markdown/" style="font-size: 15px;">Markdown</a> <a href="/tags/bash/" style="font-size: 15px;">bash</a> <a href="/tags/VPN/" style="font-size: 15px;">VPN</a> <a href="/tags/CentOS/" style="font-size: 15px;">CentOS</a> <a href="/tags/Nginx/" style="font-size: 15px;">Nginx</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Web/" style="font-size: 15px;">Web</a> <a href="/tags/IE/" style="font-size: 15px;">IE</a> <a href="/tags/js/" style="font-size: 15px;">js</a> <a href="/tags/jq/" style="font-size: 15px;">jq</a> <a href="/tags/discuz/" style="font-size: 15px;">discuz</a> <a href="/tags/openlayers/" style="font-size: 15px;">openlayers</a> <a href="/tags/geoserver/" style="font-size: 15px;">geoserver</a> <a href="/tags/跨域/" style="font-size: 15px;">跨域</a> <a href="/tags/Nosql/" style="font-size: 15px;">Nosql</a> <a href="/tags/bigdata/" style="font-size: 15px;">bigdata</a> <a href="/tags/svn/" style="font-size: 15px;">svn</a> <a href="/tags/pm/" style="font-size: 15px;">pm</a> <a href="/tags/redmine/" style="font-size: 15px;">redmine</a> <a href="/tags/CSS/" style="font-size: 15px;">CSS</a> <a href="/tags/前端/" style="font-size: 15px;">前端</a> <a href="/tags/VPS/" style="font-size: 15px;">VPS</a> <a href="/tags/server/" style="font-size: 15px;">server</a> <a href="/tags/cdn/" style="font-size: 15px;">cdn</a> <a href="/tags/HS/" style="font-size: 15px;">HS</a> <a href="/tags/OSX/" style="font-size: 15px;">OSX</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/code/" style="font-size: 15px;">code</a> <a href="/tags/dropbox/" style="font-size: 15px;">dropbox</a> <a href="/tags/seafile/" style="font-size: 15px;">seafile</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/c/" style="font-size: 15px;">c#</a> <a href="/tags/iis/" style="font-size: 15px;">iis</a> <a href="/tags/hive/" style="font-size: 15px;">hive</a> <a href="/tags/sqoop/" style="font-size: 15px;">sqoop</a> <a href="/tags/Dropbox/" style="font-size: 15px;">Dropbox</a> <a href="/tags/SQLSEVER/" style="font-size: 15px;">SQLSEVER</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Ftp/" style="font-size: 15px;">Ftp</a> <a href="/tags/Spark/" style="font-size: 15px;">Spark</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Google-Map/" style="font-size: 15px;">Google Map</a> <a href="/tags/葛优/" style="font-size: 15px;">葛优</a> <a href="/tags/电影/" style="font-size: 15px;">电影</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/power-tools/" style="font-size: 15px;">power tools</a> <a href="/tags/GPU/" style="font-size: 15px;">GPU</a> <a href="/tags/RS/" style="font-size: 15px;">RS</a> <a href="/tags/GIS/" style="font-size: 15px;">GIS</a> <a href="/tags/Ago/" style="font-size: 15px;">Ago</a> <a href="/tags/软件/" style="font-size: 15px;">软件</a> <a href="/tags/DL/" style="font-size: 15px;">DL</a> <a href="/tags/村上春树/" style="font-size: 15px;">村上春树</a> <a href="/tags/Agro/" style="font-size: 15px;">Agro</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/AGO/" style="font-size: 15px;">AGO</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/08/26/data-scientist-2018/">数据科学家报告 2018（The 2018 Data Scientist Report）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/13/ubers/">Uber拼车小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/12/ML-books/">机器学习入门推荐（偏深度学习）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/paper-0723-0726/">论文笔记：0723-0726</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/spatio-temporal-analysis/">长时序遥感降雨产品的时空分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/23/0716-0722/">本周论文总结-week8-0716-0722</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/05/high-yield-maize-distribution/">玉米主栽培区内高产和稳产的空间分布</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/10/paper-per-week-7/">本周论文总结-week7-0603-0610</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/07/LSTM-and-Maize-Yield/">用LSTM预测村尺度玉米产量</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/04/paper-per-week-6/">本周论文总结-week6</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> Blogroll</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Zuliang Zhao.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-93100994-1','auto');ga('send','pageview');
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
